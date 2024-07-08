@@ -1,13 +1,14 @@
 import React, {createContext} from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import {RouterProvider} from "react-router-dom";
-import {router} from "./router";
 import {initializeApp} from "firebase/app";
 import 'firebase/firestore';
 import 'firebase/auth';
 import {getAuth} from "firebase/auth";
 import {getFirestore} from "firebase/firestore";
+
+import './index.css';
+import {router} from "./router";
 
 const app = initializeApp({
     apiKey: "AIzaSyBL6-IlyU7ULtYH4TN_GjjFZrxDdimKOcE",

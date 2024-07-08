@@ -1,3 +1,5 @@
+const baseURL = process.env.REACT_APP_API;
+
 const login = '/login';
 const register = '/register';
 const chat = '/chat';
@@ -11,5 +13,6 @@ const urls = {
 }
 
 export {
+    baseURL,
     urls
 }

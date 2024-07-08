@@ -1,25 +1,35 @@
+import {useContext} from "react";
 import {Link, NavLink} from "react-router-dom";
+import {useAuthState} from "react-firebase-hooks/auth";
+import {Button} from "@mui/material";
 
 import css from './Header.module.css';
-import {useAuthState} from "react-firebase-hooks/auth";
-import {useContext} from "react";
 import {Context} from "../../index";
-import {Button} from "@mui/material";
 
 const Header = () => {
     const {auth} = useContext(Context);
     const [user] = useAuthState(auth);
     return (
         <div className={css.Header}>
-            <Link to={''} className={css.logoLink}>ChatWithMe</Link>
-            <Link to={'/chat'}>Chat</Link>
             {
                 user
-                    ? <Button onClick={() => auth.signOut()}>Logout</Button>
-                    : <NavLink to={'/login'}><Button>Login</Button></NavLink>
+                    ? <Link to={'/chat'} className={css.logoLink}>ChatWithMe</Link>
+                    : <Link to={''} className={css.logoLink}>ChatWithMe</Link>
 
             }
-            <Link to={'/register'}>Register</Link>
+            <Link to={'/chat'}><Button variant={"outlined"}>Chat</Button></Link>
+            {
+                user
+                    ? <Button onClick={() => auth.signOut()} variant={"outlined"}>Logout</Button>
+                    : <NavLink to={'/login'}><Button variant={"outlined"}>Login</Button></NavLink>
+
+            }
+            {
+                user
+                    ? ''
+                    : <Link to={'/register'}><Button variant={"outlined"}>Register</Button></Link>
+
+            }
         </div>
     );
 };

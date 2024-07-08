@@ -1,13 +1,16 @@
-import {useForm} from "react-hook-form";
-import {IAuth} from "../interfaces/authInterface";
-import {Box, Button, Container, Grid} from "@mui/material";
 import {useContext} from "react";
-import {Context} from "../index";
+import {useForm} from "react-hook-form";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {Box, Button, Container, Grid} from "@mui/material";
+
+import {IAuth} from "../interfaces/authInterface";
+import {Context} from "../index";
+import {useNavigate} from "react-router-dom";
 
 
 const LoginPage = () => {
     const {auth} = useContext(Context);
+    const navigate = useNavigate();
 
     const {register, handleSubmit, reset} = useForm<IAuth>();
 
@@ -18,6 +21,7 @@ const LoginPage = () => {
         const provider = new GoogleAuthProvider();
         const {user} = await signInWithPopup(auth, provider);
         console.log(user);
+        navigate('/chat');
     }
 
     return (

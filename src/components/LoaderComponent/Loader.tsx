@@ -1,4 +1,4 @@
-import {Box, Button, CircularProgress, Container, Grid} from "@mui/material";
+import {Box, CircularProgress, Container, Grid} from "@mui/material";
 
 const Loader = () => {
     return (

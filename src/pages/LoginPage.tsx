@@ -20,7 +20,6 @@ const LoginPage = () => {
     const loginWithGoogle = async () => {
         const provider = new GoogleAuthProvider();
         const {user} = await signInWithPopup(auth, provider);
-        console.log(user);
         navigate('/chat');
     }
 

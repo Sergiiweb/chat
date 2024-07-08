@@ -1,5 +1,5 @@
 import {useContext} from "react";
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {Button} from "@mui/material";
 
@@ -9,6 +9,8 @@ import {Context} from "../../index";
 const Header = () => {
     const {auth} = useContext(Context);
     const [user] = useAuthState(auth);
+    const navigate = useNavigate();
+
     return (
         <div className={css.Header}>
             {
@@ -20,7 +22,10 @@ const Header = () => {
             <Link to={'/chat'}><Button variant={"outlined"}>Chat</Button></Link>
             {
                 user
-                    ? <Button onClick={() => auth.signOut()} variant={"outlined"}>Logout</Button>
+                    ? <Button onClick={() => {
+                        auth.signOut();
+                        navigate('/login');
+                    }} variant={"outlined"}>Logout</Button>
                     : <NavLink to={'/login'}><Button variant={"outlined"}>Login</Button></NavLink>
 
             }

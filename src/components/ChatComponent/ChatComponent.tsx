@@ -1,28 +1,29 @@
 import {useContext, useState} from "react";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {useCollectionData} from "react-firebase-hooks/firestore";
-import {Avatar, Button, Container, dividerClasses, Grid, TextField} from "@mui/material";
-import {doc, setDoc, Timestamp, collection, query, orderBy, addDoc} from "firebase/firestore";
+import {Avatar, Button, Container, Grid, TextField} from "@mui/material";
+import {collection, query, orderBy, addDoc} from "firebase/firestore";
 
 import {Context} from "../../index";
 import Loader from "../LoaderComponent/Loader";
+import {IMessage} from "../../interfaces/messageInterface";
 
 const ChatComponent = () => {
     const {auth, firestore} = useContext(Context);
     const [user] = useAuthState(auth);
     const [message, setMessage] = useState('');
-    const [messages, loading, errors] = useCollectionData(
+    const [messages, loading] = useCollectionData(
         query(
             collection(firestore, 'messages'),
             orderBy('createdAt')
         ));
-    console.log(messages);
+
     if (loading) {
         return <Loader/>
     }
 
     const sendMessage = async () => {
-        const data = {
+        const data: IMessage = {
             uid: user.uid,
             displayName: user.displayName,
             photoURL: user.photoURL,
@@ -41,8 +42,15 @@ const ChatComponent = () => {
                 justifyContent={"center"}
             >
                 <div style={{width: '80%', height: '65vh', border: '1px solid lightgray', overflowY: 'auto'}}>
-                    {messages.map(message =>
-                        <div>
+                    {messages?.map(message =>
+                        <div key={message.createdAt} style={{
+                            margin: 5,
+                            border: user.uid === message.uid ? '2px solid green' : '2px dashed red',
+                            borderRadius: 5,
+                            marginLeft: user.uid === message.uid ? 'auto' : '10px',
+                            width: 'fit-content',
+                            padding: 5
+                        }}>
                             <Grid
                                 container
                             >

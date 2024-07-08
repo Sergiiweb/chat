@@ -21,8 +21,8 @@ const app = initializeApp({
 
 export const Context = createContext(null);
 
-const auth = getAuth();
-const firestore = getFirestore();
+const auth = getAuth(app);
+const firestore = getFirestore(app);
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
